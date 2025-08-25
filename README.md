@@ -15,6 +15,9 @@ Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo de
 - Larissa Vitoria Cesar Cruz
 - Marcella dos Santos Cardoso
 - Thiago Henrique Morais Regueira
+- Evelin de Sousa Rocha
+- Iolanda Benfica
+- Maria Luísa Lacerda Soares
 
 ## Orientador
 
