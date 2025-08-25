@@ -2,23 +2,28 @@
 
 Arquitetura de Dados em Nuvem
 
-# TÍTULO DO PROJETO
+# PUC Investimentos
 
-`CURSO`
-`ANO/SEMESTRE`
+`TÉCNOLOGO EM BANCO DE DADOS`
+`2025/5°`
 
-Descrever resumidamente, em um ou dois parágrafos, o projeto que está sendo desenvolvido.
+O projeto PUC Investimentos tem como objetivo desenvolver um dashboard financeiro interativo que consolida informações sobre ações brasileiras (IBRX50), criptomoedas, câmbio e indicadores econômicos relevantes. A iniciativa busca centralizar dados dispersos em diferentes fontes oficiais (B3, Banco Central, IBGE, exchanges internacionais), proporcionando uma visualização simplificada, intuitiva e confiável para investidores iniciantes e experientes.
+
+Além de permitir análises interativas com gráficos dinâmicos e rankings de desempenho, o projeto promove educação financeira acessível, respeitando princípios éticos, sustentabilidade e segurança. O processo de controle dos dados garante rastreabilidade desde a origem até a visualização final, assegurando transparência e integridade nas informações apresentadas.
 
 ## Integrantes
 
+- Evelin de Sousa Rocha
+- Iolanda Benfica
+- Larissa Vitoria Cesar Cruz
 - Lucas Costa de Oliveira
-- Nome completo do aluno 2
-- Nome completo do aluno 3
-- Nome completo do aluno 4
+- Marcella dos Santos Cardoso
+- Maria Luísa Lacerda Soares
+- Thiago Regueira
 
 ## Orientador
 
-- Nome completo do professor 1
+- Cristiano Geraldo Teixeira Silva
 
 # Documentação
 
