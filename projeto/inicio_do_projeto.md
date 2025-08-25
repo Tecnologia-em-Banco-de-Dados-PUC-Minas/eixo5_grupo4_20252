@@ -12,7 +12,7 @@ Além disso, a ausência de ferramentas acessíveis e interativas torna o proces
 
 ## 2. Contexto  
 
-Para atender a essa necessidade, o projeto **PUC Investimentos** foi desenvolvido como um dashboard interativo que consolida informações financeiras relevantes em um único ambiente.  
+Para atender a essa necessidade, o projeto **PUC Investimentos** será desenvolvido como um dashboard interativo que consolida informações financeiras relevantes em um único ambiente.  
 
 ### Conjuntos de dados utilizados e justificativa:  
 - **Ações brasileiras (IBRX50)** – Fonte: B3.  
