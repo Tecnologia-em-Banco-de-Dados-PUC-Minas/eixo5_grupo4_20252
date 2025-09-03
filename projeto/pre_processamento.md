@@ -19,9 +19,9 @@ No entanto, inicialmente estamos trabalhando com uma estrutura local. Portanto, 
 
 ### Estrutura de Pastas
 ```
-Projeto_Eixo5/
+Projeto_Eixo5_Grupo4_20252/
 │
-├─ projeto_Eixo5/ ← Ambiente virtual (venv)
+├─ PUCInvestimentos/ ← Ambiente virtual (venv)
 ├─ etl/ ← Pacote com scripts de pré-processamento e coleta
 │ ├─ init.py ← Permite que Python reconheça a pasta como pacote
 │ ├─ scraping_ibrx50.py
@@ -39,13 +39,13 @@ Projeto_Eixo5/
 
 ```
 # Criar venv
-python -m venv projeto_Eixo5
+python -m venv PUCInvestimentos
 
 # Ativar venv no PowerShell
-.\projeto_Eixo5\Scripts\Activate.ps1
+.\PUCInvestimentos\Scripts\Activate.ps1
 
 # Ativar venv no CMD
-.\projeto_Eixo5\Scripts\activate.bat
+.\PUCInvestimentos\Scripts\activate.bat
 ```
 
 ### 2.2 Instalar Dependências
