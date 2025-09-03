@@ -64,7 +64,7 @@ O projeto adota princípios éticos ao:
 
 ## 5. Processo de Controle dos Dados  
 
-Para garantir rastreabilidade e confiabilidade, o processo de controle do **PUC** seguirá estas diretrizes:  
+Para garantir rastreabilidade e confiabilidade, o processo de controle do **PUC Investimentos** seguirá estas diretrizes:  
 
 1. **Origem dos dados**: registro da fonte (B3, Banco Central, IBGE, exchanges).  
 2. **Coleta**: APIs ou datasets atualizados periodicamente.  
