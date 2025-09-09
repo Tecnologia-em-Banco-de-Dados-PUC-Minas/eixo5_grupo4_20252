@@ -1,4 +1,3 @@
-
 # Pré-Processamento de Dados
 
 O **pré-processamento de dados** é a etapa do projeto responsável por preparar o ambiente e os dados para que o processamento principal ocorra de forma organizada e sem erros. Nessa fase, são realizadas tarefas como:
@@ -53,6 +52,11 @@ python -m venv PUCInvestimentos
 pip install -r requirements.txt
 ```
 
+### 2.3 Rodar a pipeline
+```
+python projeto/main_process.py
+```
+
 ## 3. Preparação dos Módulos ETL
 * Certificar-se de que a pasta `etl/` contém todos os arquivos .py necessários.
 * Garantir que exista o arquivo `__init__.py` para que Python reconheça a pasta como pacote.
@@ -66,6 +70,33 @@ from etl.criptomoedas import baixar_historico_cripto
 from etl.cambio import baixar_historico_cambio
 from etl.indices_economicos import buscar_dados_economicos
 ```
+
+## 4. Limpeza e Tratamento dos Dados
+
+Nesta terceira etapa, os dados já estão disponíveis, podendo estar em diferentes fontes e em diferentes formatos e padrões em cada variável ali presente, precisando realizar conversões e junções para cada formato obtido. Sendo assim, essa etapa pretende conhecer melhor os dados, retirar dados e valores que não deveriam estar presentes, tratar variáveis e valores que não estão nos padrões esperados. Resumidamente, deixar o conjunto de dados pronto e ‘limpo’ para os próximos passos de análises e treinamento dos algoritmos.
+
+As ações realizadas para a limpeza e criação de relações incluem:
+- **Conversão de Tipos:** Ajuste de colunas para os tipos corretos (ex: datas, números).
+- **Tratamento de Nulos:** Decisão de como lidar com valores ausentes (remover, preencher com média/mediana, etc.).
+- **Padronização de Formatos:** Garantir que dados como datas e moedas sigam um padrão único.
+- **Junção de Fontes:** Unir os diferentes datasets (Ações, Câmbio, Criptomoedas, Índices) em um único conjunto de dados coeso para análise.
+- **Remoção de Outliers:** Identificar e tratar valores discrepantes que possam distorcer a análise.
+
+## 5. Ferramentas Selecionadas
+
+É importante destacar as escolhas de ferramentas para a realização dos trabalhos. Após discussões da equipe, oficializamos as escolhas abaixo, justificando as características relevantes de cada uma.
+
+Analisando as possíveis linguagens de programação, bibliotecas e ferramentas complementares para resolver o problema, bem como o aprendizado obtido ao longo do curso, foi escolhida a linguagem **Python** e seu ecossistema para o contexto de aprendizado de máquina.
+
+- **Linguagem de Programação: Python**
+  - **Justificativa:** É uma linguagem de alto nível, com sintaxe clara e uma vasta gama de bibliotecas para análise de dados, machine learning e automação. Sua grande comunidade garante suporte e desenvolvimento contínuo.
+
+- **Bibliotecas Principais:**
+  - **Pandas:** Ferramenta fundamental para manipulação e análise de dados. Sua estrutura de DataFrame é ideal para lidar com os dados tabulares de ações, câmbio e indicadores econômicos.
+  - **yfinance:** Biblioteca para acesso direto aos dados históricos de ações do Yahoo Finance, simplificando a coleta de dados do mercado financeiro.
+  - **python-bcb:** Facilita a consulta a dados e séries temporais do Banco Central do Brasil, utilizada para obter a taxa SELIC e outros indicadores.
+  - **Requests:** Utilizadas para realizar chamadas a APIs de forma eficiente, como a da YFinance para dados de criptomoedas.
+  - **Selenium:** Ferramenta de automação de navegadores, essencial para o web scraping de dados que não são disponibilizados via API, como a composição do índice IBrX-50.
 
 # Observações e Recomendações
 Para garantir que o projeto rode em qualquer máquina, pode-se criar um Dockerfile com todas as dependências, incluindo os pacotes necessários. Ao considerar execução na AWS, é necessário avaliar o custo de execução, pois a plataforma cobra por CPU, memória e armazenamento. Containers pesados (Python + Selenium + Pandas + scraping) podem consumir recursos consideráveis.
