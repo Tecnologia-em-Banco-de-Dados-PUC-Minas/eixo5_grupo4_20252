@@ -6,5 +6,3 @@ python-bcb
 selenium
 chardet
 webdriver-manager
-requests_cache
-requests_ratelimiter
