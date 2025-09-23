@@ -211,8 +211,13 @@ def get_current_prices_cripto(df):
         usd_brl_rate = get_usdbrl_rate()
 
         def get_price_usd(nome_cripto):
-            """
-            Obtém o preço atual de uma criptomoeda em USD.
+            """Obtém o preço atual de uma criptomoeda em USD.
+
+            Args:
+                nome_cripto (str): O nome da criptomoeda (ex: "Bitcoin").
+
+            Returns:
+                float: O preço de fechamento mais recente em USD, ou 0.0 se não for encontrado.
             """
             symbol = symbol_map.get(nome_cripto)
             if symbol:
