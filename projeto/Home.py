@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-from projeto.style.style_config import apply_custom_style, add_footer
+from style.style_config import apply_custom_style, add_footer
 
 
 st.set_page_config(
