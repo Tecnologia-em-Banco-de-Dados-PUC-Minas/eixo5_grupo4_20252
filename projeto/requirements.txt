@@ -6,3 +6,4 @@ python-bcb
 selenium
 chardet
 webdriver-manager
+streamlit
