@@ -29,7 +29,7 @@ O propósito final é criar um chatbot inteligente que:
 **Ferramentas:**
 - `scikit-learn` (modelos preditivos)
 - `pandas` e `numpy` (tratamento de dados)
-- `matplotlib` ou `plotly` (visualizações)
+- `plotly` (visualizações)
 
 **Resultado esperado:** scripts treinados que possam prever ou analisar o comportamento dos indicadores.
 
