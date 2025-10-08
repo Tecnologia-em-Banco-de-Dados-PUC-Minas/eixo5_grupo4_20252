@@ -8,3 +8,4 @@ chardet
 webdriver-manager
 streamlit
 plotly
+scikit-learn
