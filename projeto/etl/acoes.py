@@ -5,6 +5,7 @@ import time
 import os
 import requests
 from etl.cambio import get_usdbrl_rate
+import re
 
 def _get_results_dir():
     """
@@ -20,8 +21,25 @@ def baixar_historico_acoes():
     try:
         results_dir = _get_results_dir()
         
-        data_atual = datetime.now().strftime('%d-%m-%y')
-        nome_arquivo = os.path.join(results_dir, f'IBXLDia_{data_atual}.csv')
+        arquivos_na_pasta = [os.path.join(results_dir, f) for f in os.listdir(results_dir) if f.endswith(".csv")]
+
+        if not arquivos_na_pasta:
+            print("Nenhum arquivo .csv encontrado na pasta.")
+        else:
+            caminho_arquivo_recente = max(arquivos_na_pasta, key=os.path.getmtime)
+            nome_arquivo_recente = os.path.basename(caminho_arquivo_recente)
+            print(f"O arquivo baixado mais recentemente é: {nome_arquivo_recente}")
+        
+        padrao_data = r"(\d{2}-\d{2}-\d{2})"
+        match = re.search(padrao_data, nome_arquivo_recente)
+        
+        if match:
+            data_arquivo = match.group(1)
+            print(f"Data do arquivo: {data_arquivo}")
+
+        nome_arquivo = os.path.join(results_dir, f"IBXLDia_{data_arquivo}.csv")
+        #data_atual = datetime.now().strftime('%d-%m-%y')
+        #nome_arquivo = os.path.join(results_dir, f'IBXLDia_{data_atual}.csv')
         
         df_acoes = pd.read_csv(nome_arquivo, skiprows=1)
         df_acoes.columns = ['Código']
