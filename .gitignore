@@ -177,6 +177,8 @@ pyrightconfig.json
 
 # Generated using ignr.py - github.com/Antrikshy/ignr.py
 
-# Regras personalizadas
-*.csv
+# Ignore .vscode/
 .vscode/
+
+# Ignore results directory
+results/
