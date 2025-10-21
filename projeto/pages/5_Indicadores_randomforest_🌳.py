@@ -6,7 +6,7 @@ import os
 import sys
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_percentage_error, mean_squared_error
+from sklearn.metrics import mean_absolute_percentage_error, mean_squared_error, mean_absolute_error, r2_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 
@@ -157,6 +157,38 @@ def criar_features_temporais(df):
     return df
 
 
+
+def criar_features_melhoradas(df, indicador):
+    """Cria features avancadas incluindo lags e medias moveis para series com tendencia.
+    
+    Args:
+        df (pd.DataFrame): DataFrame com coluna Date e o indicador.
+        indicador (str): Nome da coluna do indicador.
+    
+    Returns:
+        pd.DataFrame: DataFrame com features adicionais.
+    """
+    df = df.copy()
+    df["ano"] = df["Date"].dt.year
+    df["mes"] = df["Date"].dt.month
+    df["dia"] = df["Date"].dt.day
+    df["dia_semana"] = df["Date"].dt.dayofweek
+    df["trimestre"] = df["Date"].dt.quarter
+    
+    # Features de lag (valores anteriores)
+    df['lag_1'] = df[indicador].shift(1)
+    df['lag_3'] = df[indicador].shift(3)
+    df['lag_12'] = df[indicador].shift(12)
+    
+    # Medias moveis
+    df['ma_3'] = df[indicador].rolling(window=3).mean()
+    df['ma_6'] = df[indicador].rolling(window=6).mean()
+    
+    # Tendencia linear (indice temporal)
+    df['tendencia'] = range(len(df))
+    
+    return df.dropna()
+
 def treinar_random_forest(df, indicador, periodos_previsao=6):
     """Treina um modelo de Random Forest para prever um indicador.
 
@@ -166,19 +198,29 @@ def treinar_random_forest(df, indicador, periodos_previsao=6):
         periodos_previsao (int, optional): Número de períodos para previsão. Defaults to 6.
 
     Returns:
-        tuple: Uma tupla contendo o modelo treinado, o scaler, o erro MAPE e o erro RMSE.
-               Retorna (None, None, None, None) se não houver dados suficientes.
+        tuple: Uma tupla contendo o modelo treinado, o scaler, métricas (MAE, RMSE, R2, MAPE).
+               Retorna (None, None, None, None, None, None) se não houver dados suficientes.
     """
     if len(df) < 24:
-        return None, None, None, None
+        return None, None, None, None, None, None
 
-    df_features = criar_features_temporais(df)
-
-    X = df_features[["ano", "mes", "dia", "trimestre"]]
+    # Usar features melhoradas para PIB_MENSAL (que tem tendencia forte)
+    if indicador == "PIB_MENSAL":
+        df_features = criar_features_melhoradas(df, indicador)
+        X = df_features[["ano", "mes", "trimestre", "lag_1", "lag_3", "lag_12", "ma_3", "ma_6", "tendencia"]]
+        # Ajustar hiperparametros para PIB
+        n_estimators = 200
+        max_depth = 10
+    else:
+        df_features = criar_features_temporais(df)
+        X = df_features[["ano", "mes", "dia", "trimestre"]]
+        n_estimators = 100
+        max_depth = None
+    
     y = df_features[indicador]
 
     if np.isinf(y).any() or y.isna().any():
-        return None, None, None, None
+        return None, None, None, None, None, None
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.2, shuffle=False
@@ -188,14 +230,35 @@ def treinar_random_forest(df, indicador, periodos_previsao=6):
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    modelo = RandomForestRegressor(n_estimators=100, random_state=42)
+    modelo = RandomForestRegressor(n_estimators=n_estimators, max_depth=max_depth, random_state=42)
     modelo.fit(X_train_scaled, y_train)
 
     y_pred = modelo.predict(X_test_scaled)
-    mape = mean_absolute_percentage_error(y_test, y_pred)
+    
+    # Calcular MAE (Erro Absoluto Médio) - mais confiável para valores pequenos
+    mae = mean_absolute_error(y_test, y_pred)
+    
+    # Calcular RMSE
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+    
+    # Calcular R² (coeficiente de determinação)
+    r2 = r2_score(y_test, y_pred)
+    
+    # Calcular MAPE apenas se não houver valores muito próximos de zero ou negativos
+    # Para evitar divisão por valores muito pequenos que causam erros enormes
+    # Também verifica se a média dos valores é razoável para o cálculo percentual
+    if np.all(np.abs(y_test) > 1.0) and np.all(y_test > 0):  # Valores > 1 e todos positivos
+        try:
+            mape = mean_absolute_percentage_error(y_test, y_pred)  # Retorna valor 0-1
+            # Se MAPE for muito alto (> 50%), também não exibir
+            if mape > 0.5:
+                mape = None
+        except:
+            mape = None
+    else:
+        mape = None
 
-    return modelo, scaler, mape, rmse
+    return modelo, scaler, mae, rmse, r2, mape
 
 
 def fazer_previsoes_random_forest(modelo, scaler, df, indicador, periodos=6):
@@ -212,19 +275,46 @@ def fazer_previsoes_random_forest(modelo, scaler, df, indicador, periodos=6):
         tuple: Uma tupla com (previsões, intervalo_inferior, intervalo_superior).
     """
     ultima_data = df["Date"].iloc[-1]
+    datas_futuras = pd.date_range(start=ultima_data, periods=periodos + 1, freq="ME")[1:]
 
-    datas_futuras = pd.date_range(start=ultima_data, periods=periodos + 1, freq="ME")[
-        1:
-    ]
-
-    # Criar dataframe para previsão
-    df_futuro = pd.DataFrame({"Date": datas_futuras})
-    df_futuro = criar_features_temporais(df_futuro)
-
-    X_futuro = df_futuro[["ano", "mes", "dia", "trimestre"]]
-    X_futuro_scaled = scaler.transform(X_futuro)
-
-    previsoes = modelo.predict(X_futuro_scaled)
+    # Para PIB_MENSAL, usar previsão iterativa com features de lag
+    if indicador == "PIB_MENSAL":
+        previsoes = []
+        df_temp = df.copy()
+        
+        for data_futura in datas_futuras:
+            # Criar features para a próxima previsão
+            df_temp_features = criar_features_melhoradas(df_temp, indicador)
+            
+            if len(df_temp_features) > 0:
+                ultima_linha = df_temp_features.iloc[-1:]
+                X_futuro = ultima_linha[["ano", "mes", "trimestre", "lag_1", "lag_3", "lag_12", "ma_3", "ma_6", "tendencia"]].copy()
+                
+                # Atualizar features temporais para data futura
+                X_futuro["ano"] = data_futura.year
+                X_futuro["mes"] = data_futura.month
+                X_futuro["trimestre"] = (data_futura.month - 1) // 3 + 1
+                X_futuro["tendencia"] = len(df_temp)
+                
+                X_futuro_scaled = scaler.transform(X_futuro)
+                previsao = modelo.predict(X_futuro_scaled)[0]
+                previsoes.append(previsao)
+                
+                # Adicionar previsão ao df_temp para próxima iteração
+                nova_linha = pd.DataFrame({
+                    "Date": [data_futura],
+                    indicador: [previsao]
+                })
+                df_temp = pd.concat([df_temp, nova_linha], ignore_index=True)
+        
+        previsoes = np.array(previsoes)
+    else:
+        # Para outros indicadores, usar método original
+        df_futuro = pd.DataFrame({"Date": datas_futuras})
+        df_futuro = criar_features_temporais(df_futuro)
+        X_futuro = df_futuro[["ano", "mes", "dia", "trimestre"]]
+        X_futuro_scaled = scaler.transform(X_futuro)
+        previsoes = modelo.predict(X_futuro_scaled)
 
     std_historico = df[indicador].std()
     intervalo_inferior = previsoes - 1.96 * std_historico
@@ -519,7 +609,7 @@ with tab2:
             df_indicador = df_indicador.dropna()
 
         # Treinando modelo de random forest
-        modelo, scaler, mape, rmse = treinar_random_forest(
+        modelo, scaler, mae, rmse, r2, mape = treinar_random_forest(
             df_indicador, codigo, periodos_previsao=horizonte
         )
 
@@ -603,17 +693,44 @@ with tab2:
 
             st.plotly_chart(fig, use_container_width=True)
 
+
             # Exibindo as métricas de avaliação do modelo
             st.markdown("##### Métricas de Avaliação do Modelo de Previsão")
-            col_metrica1, col_metrica2 = st.columns(2)
+            col_metrica1, col_metrica2, col_metrica3 = st.columns(3)
+            
+            # Formatar valores de acordo com o tipo de indicador
+            if codigo == "PIB_MENSAL":
+                mae_fmt = f"R$ {mae:,.0f}"
+                rmse_fmt = f"R$ {rmse:,.0f}"
+                mae_help = "Erro médio em milhões de reais. Quanto menor, melhor."
+                rmse_help = "Magnitude média dos erros em milhões de reais. Quanto menor, melhor."
+            else:
+                # Indicadores percentuais (SELIC, IPCA, IGP-M, INPC, CDI)
+                mae_fmt = f"{mae:.2f}%"
+                rmse_fmt = f"{rmse:.2f}%"
+                mae_help = "Erro médio percentual. Quanto menor, melhor."
+                rmse_help = "Magnitude média dos erros percentuais. Quanto menor, melhor."
+            
             with col_metrica1:
-                st.metric(label="Erro Percentual Médio (MAPE)", 
-                          value=f"{mape:.2%}", 
-                          help="Indica o erro médio das previsões em termos percentuais. Quanto menor, melhor o modelo.")
+                st.metric(label="Erro Absoluto Médio (MAE)",
+                          value=mae_fmt,
+                          help=mae_help)
             with col_metrica2:
-                st.metric(label="Raiz do Erro Quadrático Médio (RMSE)", 
-                          value=f"{rmse:.4f}",
-                          help="Mede a magnitude média dos erros na mesma unidade do indicador. Quanto menor, melhor o modelo.")
+                st.metric(label="Raiz do Erro Quadrático Médio (RMSE)",
+                          value=rmse_fmt,
+                          help=rmse_help)
+            with col_metrica3:
+                st.metric(label="Coeficiente de Determinação (R²)",
+                          value=f"{r2:.4f}",
+                          help="Indica a qualidade do ajuste do modelo (-∞ a 1). Quanto mais próximo de 1, melhor.")
+            
+            # Exibir MAPE apenas se disponível
+            if mape is not None:
+                st.metric(label="Erro Percentual Médio Absoluto (MAPE)",
+                          value=f"{mape:.2%}",
+                          help="Indica o erro médio das previsões em termos percentuais. Quanto menor, melhor o modelo.")
+            else:
+                st.info("⚠️ MAPE não calculado: valores muito próximos de zero podem gerar resultados imprecisos. Use MAE e RMSE como referência.")
 
 # Adicionar footer padronizado
 add_footer()
