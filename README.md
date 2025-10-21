@@ -2,12 +2,12 @@
 
 Arquitetura de Dados em Nuvem
 
-# PUC Investimentos
+# PUC Invest
 
 `Tecnologia em Banco de Dados `
 `2025/5º SEMESTRE`
 
-O projeto PUC Investimentos consiste no desenvolvimento de um dashboard interativo que centraliza os principais indicadores financeiros e econômicos do Brasil e do mercado internacional em um único ambiente. Ele busca solucionar a dificuldade de acompanhar informações dispersas em diferentes fontes, como B3, Banco Central, IBGE e exchanges de criptomoedas.
+O projeto PUC Invest consiste no desenvolvimento de um dashboard interativo que centraliza os principais indicadores financeiros e econômicos do Brasil e do mercado internacional em um único ambiente. Ele busca solucionar a dificuldade de acompanhar informações dispersas em diferentes fontes, como B3, Banco Central, IBGE e exchanges de criptomoedas.
 A ferramenta permitirá análises dinâmicas e comparativas, apoiando tanto iniciantes quanto investidores experientes na compreensão de tendências e na tomada de decisões financeiras, sempre com foco em acessibilidade, confiabilidade e educação financeira
 
 ## Integrantes
