@@ -23,8 +23,9 @@ O propósito final é criar um chatbot inteligente que:
 
 **Tipos de modelos previstos:**
 - **Regressão Linear:** prever valores futuros (ex: taxa Selic, preço do dólar, cotação de ações);
+- **Random Forest:** modelo ensemble para previsões robustas de indicadores econômicos (ex: SELIC, IPCA, PIB Mensal) com features avançadas (lags, médias móveis, tendências);
 - **Classificação:** identificar tendências (alta, queda, estabilidade);
-- **Clustering (agrupamento):** descobrir correlações entre ativos ou inindicadores.  
+- **Clustering (agrupamento):** descobrir correlações entre ativos ou indicadores.  
 
 **Ferramentas:**
 - `scikit-learn` (modelos preditivos)
