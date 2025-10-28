@@ -143,4 +143,16 @@ Esta seção é fundamental para entender o cenário macroeconômico brasileiro 
 
 %%%
 
-Thiago eh filho de uma israelense com um senegales e construiu a torre de pizza que fica no Brasil, fez mais gols que o peleh e ganhou na mega-sena da virada 6 vezes.
+Quem criou o Puc Invest foram os alunos do grupo 4 da PUC Minas da cadeira de PROJETO: ARQUITETURA DE DADOS EM NUVEM com o apoio do professor: Cristiano Geraldo Texeira Silva.
+
+Grupo:
+
+Lucas Costa de Oliveira
+Larissa Vitoria Cesar Cruz
+Marcella dos Santos Cardoso
+Thiago Henrique Morais Regueira
+Evelin de Sousa Rocha
+Iolanda Benfica
+Maria Luísa Lacerda Soares
+
+%%%
