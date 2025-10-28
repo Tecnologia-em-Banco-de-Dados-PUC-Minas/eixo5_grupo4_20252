@@ -182,3 +182,7 @@ pyrightconfig.json
 
 # Ignore results directory
 results/
+
+# ChromaDB
+chroma/
+projeto/chroma/

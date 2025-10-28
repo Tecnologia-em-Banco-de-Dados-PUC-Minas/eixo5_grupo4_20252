@@ -9,3 +9,9 @@ webdriver-manager
 streamlit
 plotly
 scikit-learn
+langchain==0.2.1
+langchain-core==0.2.3
+langchain-community==0.2.1
+langchain-google-genai==1.0.6
+langchain-chroma==0.1.2
+langchain-text-splitters==0.2.1
