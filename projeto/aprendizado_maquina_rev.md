@@ -18,7 +18,8 @@ O propósito final é criar um chatbot inteligente que:
 - Criação de colunas auxiliares para análise (ex: variação mensal, anual, valorização, desvalorização).  
 **Resultado esperado:** base consolidada e limpa, pronta para ser usada nos modelos de ML.
 
-_Mais detalhes na seção "Dashboards e Gráficos"._
+_Mais detalhes na seção "Evidências Visuais" em [Análise dos Resultados](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo4_20252/blob/93360b491c8500b86acc470beeffe45f2b4c2b5b/projeto/analise_resultados.md
+)._
 
 ### 2. Criação dos Modelos de Aprendizado de Máquina
 **Descrição:** desenvolver modelos que identifiquem padrões e tendências nos dados financeiros.  
