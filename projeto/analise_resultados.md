@@ -1,4 +1,4 @@
-Análise de Resultados
+Análise dos Resultados
 =====================
 
 Nesta etapa, apresentaremos uma análise dos resultados obtidos a partir do dashboard PUC Invest, que reúne informações sobre o mercado de ações brasileiro, criptomoedas, câmbio e principais indicadores econômicos. O objetivo principal foi integrar modelos preditivos ao dashboard e criar uma base capaz de alimentar um chatbot financeiro com respostas contextualizadas a partir dos dados coletados (ações, câmbio, criptomoedas e indicadores econômicos).
@@ -43,9 +43,11 @@ Com gráficos históricos e visão geral das tendências.
 Como usar
 ---------
 
-*   Navegação pelas seções via menu lateral    
-*   Gráficos interativos (zoom, hover, exportação)   
-*   Filtros para ativos e períodos de análise   
+Clicando nos links abaixo é possível visualizar como é a usabilidade da ferramenta.
+
+*   [Navegação pelas seções via menu lateral](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo4_20252/blob/872b06203f54c3f4bd2f094bc85aee6984fb6ce8/projeto/assets/PUCInvest_Navegacao.gif)
+*   [Gráficos interativos (zoom, hover, exportação)](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo4_20252/blob/872b06203f54c3f4bd2f094bc85aee6984fb6ce8/projeto/assets/PUCInvest_Graficos.gif)
+*   [Filtros para ativos e períodos de análise](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo4_20252/blob/872b06203f54c3f4bd2f094bc85aee6984fb6ce8/projeto/assets/PUCInvest_FiltroAtivos.gif) 
 
 Fontes de Dados
 ---------------
@@ -58,8 +60,8 @@ Fontes de Dados
 Observações
 -----------
 
-*   Dados com finalidade informativa, não configuram recomendação    
-*   Atualização diária, não em tempo real
+*   Os dados do painel tem finalidade informativa, não configuram recomendação    
+*   A atualização é diária, não em tempo real
 
 Evidências Visuais
 -----------
@@ -70,7 +72,10 @@ Veja o PUC Invest em ação!
 
 [Demonstração do Dashboard](https://github.com/Tecnologia-em-Banco-de-Dados-PUC-Minas/eixo5_grupo4_20252/blob/d44b286db8e8192bc5a88134226b37cd8aaea87b/projeto/assets/PUC-Invest_Demo.gif)
 
-### Testes do modelo
+ChatBot - PUC Invest AjudaAI
+-----------
+
+Nos prints abaixo, estão alguns testes realizados com o chatbot implementado na ferramenta. O chatbot será utilizado para fornecer respostas ao usuário, restritas exclusivamente ao contexto da aplicação.
 
 1. O que é o PUC Invest? 
 <img width="1915" height="511" alt="image" src="https://github.com/user-attachments/assets/5b4339c0-a737-43d1-b7d3-379008d904d6" />
