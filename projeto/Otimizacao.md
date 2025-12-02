@@ -54,7 +54,7 @@ Essa evolução também facilitaria o uso dos modelos, permitindo cruzar dados d
 
 ----------
 
-## Potencial Utilização do Painel
+## Oportunidades de Mercado
 
 O painel PUC Invest pode ser utilizado no mercado como uma ferramenta de apoio à análise financeira, oferecendo uma visão consolidada de ações, criptomoedas, câmbio e indicadores econômicos. Em contextos onde decisões dependem de informações rápidas e confiáveis, o painel funciona como um concentrador de dados, permitindo acompanhar tendências, comparar ativos e interpretar movimentos relevantes do mercado.
 
